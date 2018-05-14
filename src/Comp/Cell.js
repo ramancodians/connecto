@@ -12,6 +12,7 @@ const Cell = (props) => {
     removeAvailableMoves,
     storeAvailablePos,
     availablePos,
+    moveToken,
   } = props
   const isAvailable = availableMovesBoard && availableMovesBoard[yCoords][xCoords]
   return (
@@ -19,8 +20,10 @@ const Cell = (props) => {
       className={classnames("cell", {
         isAvail: isAvailable,
       })}
+      data-xcoords={xCoords}
+      data-ycoords={yCoords}
     >
-      { true &&
+      { text !== "e" &&
         <Token
           player={text}
           xCoords={xCoords}
@@ -30,6 +33,7 @@ const Cell = (props) => {
           removeAvailableMoves={removeAvailableMoves}
           storeAvailablePos={storeAvailablePos}
           availablePos={availablePos}
+          moveToken={moveToken}
         />
       }
     </div>

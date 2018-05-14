@@ -25,6 +25,9 @@ body {
 .board-table .row .cell.isAvail {
   background: green; }
 
+.board-table .row .cell.hovered {
+  background: pink; }
+
 .board-table .row .cell .token {
   border-radius: 50%;
   border: 1px solid #DDD;

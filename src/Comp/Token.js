@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import classnames from "classnames"
+import { getCollidingCells, DOMRectToJSON } from "./../helpers"
 
 class Token extends Component {
 
@@ -14,8 +15,17 @@ class Token extends Component {
   }
 
   handleTouchEnd = () => {
-    const { removeAvailableMoves } = this.props
+    const { removeAvailableMoves, storeAvailablePos, xCoords, yCoords, moveToken } = this.props
+    const hoveredEle = document.querySelector(".cell.isAvail.hovered")
+    if(hoveredEle) {
+      const coords = {
+        xCoords: +hoveredEle.getAttribute("data-xcoords"),
+        yCoords: +hoveredEle.getAttribute("data-ycoords"),
+      }
+      moveToken({xCoords, yCoords}, coords)
+    }
     removeAvailableMoves();
+    storeAvailablePos(null)
     this.setState({
       isDragActive: false,
     })
@@ -24,13 +34,22 @@ class Token extends Component {
   handleToucMove = (event) => {
     const { availablePos, storeAvailablePos } = this.props
     event.persist()
-    const touch = event.changedTouches[0] || {}
-    const availablePosEle = Array.from(document.querySelectorAll(".isAvail"))
-    const nodePos = availablePosEle.map((node, index) => JSON.parse(JSON.stringify(node.getBoundingClientRect())))
+    let coords;
+    try { coords = event.changedTouches[0] || {}
+    } catch(e){ coords = event.target }
     if(!availablePos){
+      const availablePosEle = Array.from(document.querySelectorAll(".isAvail"))
+      const nodePos = availablePosEle.map((node, index) => ({
+        availableCoords: DOMRectToJSON(node.getBoundingClientRect()),
+        element: node,
+      }))
+      const activeCellPos = DOMRectToJSON(event.target.getBoundingClientRect())
       storeAvailablePos(nodePos)
+    }else {
+      const activeCellPos = DOMRectToJSON(event.target.getBoundingClientRect())
+      getCollidingCells(activeCellPos, availablePos)
     }
-    const { clientX, clientY } = touch
+    const { clientX, clientY } = coords
     this.setState({
       isDragActive: true,
       touchLocation: {
@@ -52,6 +71,11 @@ class Token extends Component {
         onTouchCancel={this.handleTouch}
         onTouchEnd={this.handleTouchEnd}
         onTouchMove={this.handleToucMove}
+
+        onDragStart={this.handleTouchStart}
+        onDragEnd={this.handleTouchEnd}
+        onDrag={this.handleToucMove}
+
         style={styles}
         className={classnames("token",
           { pl1: player === "p1",

@@ -30,3 +30,39 @@ function getItemFromBoard(x, y, board){
     return {x,y}
   }
 }
+
+export function getCollidingCells(activeCell, availableCells, availablePosEle) {
+  for(let i=0; i < availableCells.length; i++){
+    const item = availableCells[i]
+    const { availableCoords: cell, element  } = item
+    if (cell.x < activeCell.x + activeCell.width &&
+       cell.x + cell.width > activeCell.x &&
+       cell.y < activeCell.y + activeCell.height &&
+       cell.height + cell.y > activeCell.y) {
+       element.classList.add("hovered")
+    }else{
+      element.classList.remove("hovered")
+    }
+  }
+}
+
+export const DOMRectToJSON = (domRect) => ({
+  x: domRect.x,
+  y: domRect.y,
+  height: domRect.height,
+  width: domRect.width,
+  left: domRect.left,
+  bottom: domRect.bottom,
+  right: domRect.right,
+  top: domRect.top,
+})
+
+export function moveToken(currentPos, nextPos, board) {
+  const {xCoords: currentXCoords, yCoords: currentYCoords } = currentPos
+  const {xCoords: nextXCoords, yCoords: nextYCoords } = nextPos
+  const dropValue = board[nextYCoords][nextXCoords]
+  const currentValue = board[currentYCoords][currentXCoords]
+  board[currentYCoords][currentXCoords] = dropValue
+  board[nextYCoords][nextXCoords] = currentValue
+  return [...board]
+}

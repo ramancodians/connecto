@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import Table from "./Table"
-import { getPossibleDropLocation } from "./../helpers"
+import { getPossibleDropLocation, moveToken } from "./../helpers"
 
 
 class Board extends Component {
@@ -15,7 +15,6 @@ class Board extends Component {
 
   handleTouch = (event) => {
     const { target } = event
-    console.log(target);
   }
 
   handleGetPossibleDropLocation = (cell) => {
@@ -33,17 +32,21 @@ class Board extends Component {
   }
 
   storeAvailablePos = (pos) => {
-    const { availablePos } = this.state
-    if(!availablePos ){
-      this.setState({
-        availablePos,
-      })
-    }
+    this.setState({
+      availablePos: pos,
+    })
+  }
+
+  handleMoveToken = (currentPos, nextPos) => {
+    const { board } = this.state
+    const newBoard = moveToken(currentPos, nextPos, board)
+    this.setState({
+      board: newBoard,
+    })
   }
 
   render(){
     const { board, availableMovesBoard, availablePos } = this.state
-    console.log(availablePos);
     return (
       <div
         className="board-wrap"
@@ -55,6 +58,7 @@ class Board extends Component {
           removeAvailableMoves={this.removeAvailableMoves}
           storeAvailablePos={this.storeAvailablePos}
           availablePos={availablePos}
+          moveToken={this.handleMoveToken}
         />
       </div>
     )

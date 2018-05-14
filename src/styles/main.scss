@@ -23,9 +23,8 @@ body {
       align-items: center;
       max-width: 100px;
 
-      &.isAvail{
-        background: green;
-      }
+      &.isAvail{ background: green; }
+      &.hovered { background: pink; }
 
       .token{
         border-radius: 50%;
