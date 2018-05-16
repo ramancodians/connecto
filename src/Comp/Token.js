@@ -10,8 +10,10 @@ class Token extends Component {
   }
 
   handleTouchStart = (event) => {
-    const { getPossibleDropLocation, xCoords, yCoords } = this.props
-    getPossibleDropLocation({xCoords, yCoords})
+    const { getPossibleDropLocation, xCoords, yCoords, turn, player } = this.props
+    if(turn === player) {
+      getPossibleDropLocation({xCoords, yCoords})
+    }
   }
 
   handleTouchEnd = () => {
@@ -32,31 +34,33 @@ class Token extends Component {
   }
 
   handleToucMove = (event) => {
-    const { availablePos, storeAvailablePos } = this.props
-    event.persist()
-    let coords;
-    try { coords = event.changedTouches[0] || {}
-    } catch(e){ coords = event.target }
-    if(!availablePos){
-      const availablePosEle = Array.from(document.querySelectorAll(".isAvail"))
-      const nodePos = availablePosEle.map((node, index) => ({
-        availableCoords: DOMRectToJSON(node.getBoundingClientRect()),
-        element: node,
-      }))
-      const activeCellPos = DOMRectToJSON(event.target.getBoundingClientRect())
-      storeAvailablePos(nodePos)
-    }else {
-      const activeCellPos = DOMRectToJSON(event.target.getBoundingClientRect())
-      getCollidingCells(activeCellPos, availablePos)
-    }
-    const { clientX, clientY } = coords
-    this.setState({
-      isDragActive: true,
-      touchLocation: {
-        clientX,
-        clientY,
+    const { availablePos, storeAvailablePos, turn, player } = this.props
+    if (turn === player) {
+      event.persist()
+      let coords;
+      try { coords = event.changedTouches[0] || {}
+      } catch(e){ coords = event.target }
+      if(!availablePos){
+        const availablePosEle = Array.from(document.querySelectorAll(".isAvail"))
+        const nodePos = availablePosEle.map((node, index) => ({
+          availableCoords: DOMRectToJSON(node.getBoundingClientRect()),
+          element: node,
+        }))
+        const activeCellPos = DOMRectToJSON(event.target.getBoundingClientRect())
+        storeAvailablePos(nodePos)
+      }else {
+        const activeCellPos = DOMRectToJSON(event.target.getBoundingClientRect())
+        getCollidingCells(activeCellPos, availablePos)
       }
-    })
+      const { clientX, clientY } = coords
+      this.setState({
+        isDragActive: true,
+        touchLocation: {
+          clientX,
+          clientY,
+        }
+      })
+    }
   }
 
 

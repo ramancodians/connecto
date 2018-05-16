@@ -13,6 +13,8 @@ const Cell = (props) => {
     storeAvailablePos,
     availablePos,
     moveToken,
+    turn,
+    placeAToken,
   } = props
   const isAvailable = availableMovesBoard && availableMovesBoard[yCoords][xCoords]
   return (
@@ -22,9 +24,13 @@ const Cell = (props) => {
       })}
       data-xcoords={xCoords}
       data-ycoords={yCoords}
+      onClick={() => {
+        if(text === "e") { placeAToken({xCoords, yCoords}, turn)}
+      }}
     >
       { text !== "e" &&
         <Token
+          turn={turn}
           player={text}
           xCoords={xCoords}
           yCoords={yCoords}
