@@ -65,7 +65,7 @@ class Token extends Component {
 
 
   render(){
-    const { player, isAvailable, availablePos } = this.props
+    const { player, isAvailable, availablePos, turn } = this.props
     const { isDragActive, touchLocation: { clientX, clientY } } = this.state
     const styles = isDragActive ? { top: `${+clientY - 25}px`, left: `${+clientX - 25}px`} : {}
     return (
@@ -85,9 +85,9 @@ class Token extends Component {
           { pl1: player === "p1",
             pl2: player === "p2",
             active: isDragActive,
+            turn: turn === player,
           })}
       >
-        {player}
       </div>
     )
   }

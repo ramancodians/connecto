@@ -4,8 +4,30 @@
   padding: 0px;
 }
 
+img{
+  width: 100%;
+  height: auto;
+  align-self: center;
+}
+
+.pull-to-refresh-disable{
+  height: 100%;
+  position: fixed;
+  width: 100%;
+  padding: 10px;
+  > div {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
 body {
   font-family: sans-serif;
+  overscroll-behavior-y: contain;
 }
 
 #root{
@@ -16,9 +38,8 @@ body {
 }
 
 .board-table{
-  margin: 40px auto;
+  margin: 80px auto;
   display: block;
-  border: 10px solid rgba(blue, 0.1);
   max-width: 400px;
   .row{
     display: flex;
@@ -38,19 +59,43 @@ body {
   }
 }
 
+@keyframes lowJump {
+  0%{
+    transform: scale(1);
+  }
+  50%{
+    transform: scale(1.05);
+  }
+  100%{
+    transform: scale(1);
+  }
+}
+
 .token{
   border-radius: 50%;
   border: 1px solid #DDD;
-  width: 50px;
-  height: 50px;
+  width:  70px;
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: bold;
   color: rgba(#000, 0.7);
+  overflow: hidden;
+  box-shadow: 0 3px 5px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  &.turn {
+      box-shadow: 0 3px 5px rgba(green,0.19), 0 6px 6px rgba(green,0.23);
+      animation: lowJump 1s infinite
+  }
 
-  &.pl1 { background: yellow;}
-  &.pl2 { background: red;}
+  &.pl1 {
+    background: url("./../media/coins/type_1.png");
+    background-size: cover;
+  }
+  &.pl2 {
+    background: url("./../media/beer/250.png");
+    background-size: cover;
+  }
 
   &.active{
     transform: scale(1.2);
@@ -59,13 +104,71 @@ body {
 }
 
 .token-holder{
+  position: fixed;
   display: flex;
-  border: 1px solid red;
+  border: 1px solid #DDD;
+  height: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &.activeTurn{
-    background: rgba(blue, 0.2);
+    border: 2px solid green;
+    background: rgba(green,0.3);
+  }
+  &.top{
+    top: -2px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+  &.bottom{
+    bottom: -2px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
   }
   .token{
     margin: 10px;
+    height: 30px;
+    width: 30px;
   }
+}
+
+.btn{
+  display: inline-block;
+  padding: 10px;
+  border-radius: 5px;
+  min-width: 150px;
+  font-weight: bold;
+  font-size: 18px;
+
+  a{
+    text-decoration: none;
+    color: #FFF;
+  }
+
+  &.success{
+    background: #16a085 ;
+  }
+}
+
+.launch-page{
+  display: flex;
+  flex-direction: column;
+  flex:1;
+
+  button{
+    margin-top: 50px;
+  }
+}
+
+.board-wrap{
+  flex:1;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

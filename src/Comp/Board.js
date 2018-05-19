@@ -47,6 +47,14 @@ class Board extends Component {
     })
   }
 
+  componentDidUpdate() {
+    const { isWon } = this.state
+    const { history } = this.props
+    if (isWon) {
+      history.push("/over", { isWon });
+    }
+  }
+
   handleMoveToken = (currentPos, nextPos) => {
     const { board, turn } = this.state
     const newBoard = moveToken(currentPos, nextPos, board)
@@ -94,6 +102,7 @@ class Board extends Component {
           isWon: won,
         })
       } else {
+        SLIDESOUND.play()
         this.setState({
           board: newBoard,
           turn: this.toggleTurn(turn),
@@ -109,12 +118,10 @@ class Board extends Component {
     const { board, availableMovesBoard, availablePos, isWon, turn, p1, p2 } = this.state
     const tokens = turn === "p1" ? p1 : p2
     return (
-      <div
-        className="board-wrap"
-      >
+      <div>
         { !isWon &&
-          <div>
-            <TokensHolder tokens={p1} turn="p1" activeTurn={turn}/>
+          <div className="board-wrap">
+            <TokensHolder tokens={p1} turn="p1" activeTurn={turn} top/>
             <Table
               turn={turn}
               board={board}
@@ -126,7 +133,7 @@ class Board extends Component {
               moveToken={this.handleMoveToken}
               placeAToken={this.handlePlaceAToken}
             />
-            <TokensHolder tokens={p2} turn="p2" activeTurn={turn}/>
+            <TokensHolder tokens={p2} turn="p2" activeTurn={turn} bottom/>
           </div>
         }
 
