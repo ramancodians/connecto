@@ -7,8 +7,8 @@ class TokensHolder extends React.Component {
   TIMER = null
 
   componentDidMount() {
-    console.log("1asa");
-    this.startTimer()
+    //console.log("1asa");
+    //this.startTimer()
   }
 
   startTimer = () => {
@@ -28,16 +28,21 @@ class TokensHolder extends React.Component {
   }
 
   render(){
-    const { tokens, turn, activeTurn, top, bottom } = this.props
+    const { tokens, turn, activeTurn, top, bottom, lalaJee } = this.props
     const avalToken = new Array(tokens).fill(1)
     const { timeLeft } = this.state
     console.log(this.state);
     return (
-      <div className={classnames("token-holder", {
+      <div
+        className={classnames("token-holder", {
           activeTurn: activeTurn === turn,
           top: top,
           bottom: bottom,
-        })}>
+        })}
+        onClick={ () => {
+          if ( lalaJee ) { lalaJee(); }
+        }}
+      >
         {avalToken.map((token, index) => (
           <div key={index} className={classnames("token", { pl1: turn === "p1", pl2: turn === "p2" })}>
           </div>

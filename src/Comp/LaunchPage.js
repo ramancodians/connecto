@@ -4,8 +4,12 @@ import Button from "./../DComp/Button"
 
 const LaunchPage = () => (
   <div className="launch-page">
+    <h1>Connecto</h1>
+    <h5>It's like playing chess and tic-tac-toe!</h5>
     <img src={LaunchImg} alt="Connecto" />
-    <Button success link="/game">Play</Button>
+    <Button success link="/token-selection" id="play-button">
+      Play
+    </Button>
   </div>
 )
 

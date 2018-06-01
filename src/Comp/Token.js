@@ -65,27 +65,42 @@ class Token extends Component {
 
 
   render(){
-    const { player, isAvailable, availablePos, turn } = this.props
+    const {
+      player,
+      isAvailable,
+      availablePos,
+      turn,
+      name,
+      image,
+      notMoveble,
+      onClick,
+      selectedByP1,
+      selectedByP2,
+    } = this.props
     const { isDragActive, touchLocation: { clientX, clientY } } = this.state
     const styles = isDragActive ? { top: `${+clientY - 25}px`, left: `${+clientX - 25}px`} : {}
     return (
       <div
         draggable
-        onTouchStart={this.handleTouchStart}
-        onTouchCancel={this.handleTouch}
-        onTouchEnd={this.handleTouchEnd}
-        onTouchMove={this.handleToucMove}
-
-        onDragStart={this.handleTouchStart}
-        onDragEnd={this.handleTouchEnd}
-        onDrag={this.handleToucMove}
-
-        style={styles}
+        onTouchStart={!notMoveble ? this.handleTouchStart : undefined}
+        onTouchCancel={!notMoveble ? this.handleTouch : undefined}
+        onTouchEnd={!notMoveble ? this.handleTouchEnd : undefined}
+        onTouchMove={!notMoveble ? this.handleToucMove : undefined}
+        onDragStart={!notMoveble ? this.handleTouchStart : undefined}
+        onDragEnd={!notMoveble ? this.handleTouchEnd : undefined}
+        onDrag={!notMoveble ? this.handleToucMove : undefined}
+        onClick={onClick ? onClick : undefined}
+        style={{
+          backgroundImage: `url(${image})`,
+          ...styles,
+        }}
         className={classnames("token",
           { pl1: player === "p1",
             pl2: player === "p2",
-            active: isDragActive,
-            turn: turn === player,
+            active: !notMoveble && isDragActive,
+            turn: !notMoveble && turn === player,
+            selectedByP1,
+            selectedByP2,
           })}
       >
       </div>

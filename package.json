@@ -15,6 +15,7 @@
     "styles": "node-sass src/styles/ -o src/styles/ --watch",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && firebase deploy"
   }
 }

@@ -15,7 +15,10 @@ const Cell = (props) => {
     moveToken,
     turn,
     placeAToken,
+    player1Image,
+    player2Image,
   } = props
+  console.log(props);
   const isAvailable = availableMovesBoard && availableMovesBoard[yCoords][xCoords]
   return (
     <div
@@ -40,6 +43,7 @@ const Cell = (props) => {
           storeAvailablePos={storeAvailablePos}
           availablePos={availablePos}
           moveToken={moveToken}
+          image={ turn === "p1" ? player1Image : player2Image }
         />
       }
     </div>

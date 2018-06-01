@@ -7,6 +7,8 @@ Connecto is a unique combination of Chess and Tic-Tac-Toe for Android and iOS. C
 2. `npm start`
 3. To build the project `npm run build`
 4. Run Styles Compilation `node-sass src/styles/ -o src/styles/ --watch`
+6. To deploy, make sure you do `firebase login` and `firebase init`
+7. Run `npm run deploy`
 
 
 # Credits

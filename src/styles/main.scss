@@ -1,3 +1,5 @@
+@import "./variables.scss";
+
 * {
   box-sizing: border-box;
   margin: 0px;
@@ -15,6 +17,10 @@ img{
   position: fixed;
   width: 100%;
   padding: 10px;
+  max-width: 500px;
+  left: 50%;
+  transform: translateX(-50%);
+
   > div {
     height: 100%;
     width: 100%;
@@ -83,23 +89,29 @@ body {
   color: rgba(#000, 0.7);
   overflow: hidden;
   box-shadow: 0 3px 5px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  background-size: cover;
   &.turn {
       box-shadow: 0 3px 5px rgba(green,0.19), 0 6px 6px rgba(green,0.23);
       animation: lowJump 1s infinite
   }
 
   &.pl1 {
-    background: url("./../media/coins/type_1.png");
-    background-size: cover;
+    background-color: red;
   }
   &.pl2 {
-    background: url("./../media/beer/250.png");
-    background-size: cover;
+    background-color: blue;
   }
 
   &.active{
     transform: scale(1.2);
     position: fixed;
+  }
+
+  &.selectedByP1 {
+    border: 3px solid $player1Color;
+  }
+  &.selectedByP2 {
+    border: 3px solid $player2Color;
   }
 }
 
@@ -144,14 +156,31 @@ body {
   min-width: 150px;
   font-weight: bold;
   font-size: 18px;
+  transition-duration: 0.2s;
 
   a{
     text-decoration: none;
     color: #FFF;
   }
 
+  &.link {
+    background: red;
+    padding: 0px;
+
+    a {
+      padding: 10px;
+      display: block;
+    }
+  }
+
   &.success{
     background: #16a085 ;
+  }
+
+  &.disable {
+    pointer-events: none;
+    background: #CCC !important;
+    opacity: 0.4;
   }
 }
 
@@ -159,6 +188,17 @@ body {
   display: flex;
   flex-direction: column;
   flex:1;
+
+  > h1{
+    font-size: 60px;
+    font-family: $gamja;
+  }
+
+  > h5 {
+    font-size: 16px;
+    color: #999;
+  }
+
 
   button{
     margin-top: 50px;
@@ -171,4 +211,37 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.token-selection {
+  .token-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+
+    .type-wrap {
+      padding: 20px;
+      display: flex;
+
+      .token {
+        margin: 0px 15px;
+      }
+    }
+  }
+}
+
+.p1bg {
+  background: $player1Color;
+}
+
+.p1color {
+  color: $player1Color;
+}
+
+.p2bg {
+  background: $player2Color;
+}
+
+.p2color {
+  color: $player2Color;
 }

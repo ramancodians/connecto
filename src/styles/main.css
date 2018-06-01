@@ -12,7 +12,10 @@ img {
   height: 100%;
   position: fixed;
   width: 100%;
-  padding: 10px; }
+  padding: 10px;
+  max-width: 500px;
+  left: 50%;
+  transform: translateX(-50%); }
 
 .pull-to-refresh-disable > div {
   height: 100%;
@@ -74,23 +77,28 @@ body {
   font-weight: bold;
   color: rgba(0, 0, 0, 0.7);
   overflow: hidden;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); }
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  background-size: cover; }
 
 .token.turn {
   box-shadow: 0 3px 5px rgba(0, 128, 0, 0.19), 0 6px 6px rgba(0, 128, 0, 0.23);
   animation: lowJump 1s infinite; }
 
 .token.pl1 {
-  background: url("./../media/coins/type_1.png");
-  background-size: cover; }
+  background-color: red; }
 
 .token.pl2 {
-  background: url("./../media/beer/250.png");
-  background-size: cover; }
+  background-color: blue; }
 
 .token.active {
   transform: scale(1.2);
   position: fixed; }
+
+.token.selectedByP1 {
+  border: 3px solid #e74c3c; }
+
+.token.selectedByP2 {
+  border: 3px solid #2980b9; }
 
 .token-holder {
   position: fixed;
@@ -130,19 +138,41 @@ body {
   border-radius: 5px;
   min-width: 150px;
   font-weight: bold;
-  font-size: 18px; }
+  font-size: 18px;
+  transition-duration: 0.2s; }
 
 .btn a {
   text-decoration: none;
   color: #FFF; }
 
+.btn.link {
+  background: red;
+  padding: 0px; }
+
+.btn.link a {
+  padding: 10px;
+  display: block; }
+
 .btn.success {
   background: #16a085; }
+
+.btn.disable {
+  pointer-events: none;
+  background: #CCC !important;
+  opacity: 0.4; }
 
 .launch-page {
   display: flex;
   flex-direction: column;
   flex: 1; }
+
+.launch-page > h1 {
+  font-size: 60px;
+  font-family: "Gamja Flower", cursive; }
+
+.launch-page > h5 {
+  font-size: 16px;
+  color: #999; }
 
 .launch-page button {
   margin-top: 50px; }
@@ -153,3 +183,27 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center; }
+
+.token-selection .token-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column; }
+
+.token-selection .token-container .type-wrap {
+  padding: 20px;
+  display: flex; }
+
+.token-selection .token-container .type-wrap .token {
+  margin: 0px 15px; }
+
+.p1bg {
+  background: #e74c3c; }
+
+.p1color {
+  color: #e74c3c; }
+
+.p2bg {
+  background: #2980b9; }
+
+.p2color {
+  color: #2980b9; }

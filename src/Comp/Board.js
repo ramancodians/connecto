@@ -23,6 +23,14 @@ class Board extends Component {
     SLIDE: new Audio("./media/slide_sound.mp3")
   }
 
+  componenWillMount() {
+    const { player1_image, player2_image } = window.store
+    this.setState({
+      player1_image,
+      player2_image,
+    })
+  }
+
   handleTouch = (event) => {
     const { target } = event
   }
@@ -74,6 +82,11 @@ class Board extends Component {
     }
   }
 
+  computerTurn = () => {
+    let emptyPos  = []
+    console.log("CPU turn");
+  }
+
   toggleTurn = () => {
     const { turn } = this.state
     if(turn === "p1") {
@@ -115,7 +128,17 @@ class Board extends Component {
   }
 
   render(){
-    const { board, availableMovesBoard, availablePos, isWon, turn, p1, p2 } = this.state
+    const {
+      board,
+      availableMovesBoard,
+      availablePos,
+      isWon,
+      turn,
+      p1,
+      p2,
+      player1_image,
+      player2_image,
+    } = this.state
     const tokens = turn === "p1" ? p1 : p2
     return (
       <div>
@@ -132,8 +155,16 @@ class Board extends Component {
               availablePos={availablePos}
               moveToken={this.handleMoveToken}
               placeAToken={this.handlePlaceAToken}
+              player1Image={player1_image}
+              player2Image={player2_image}
             />
-            <TokensHolder tokens={p2} turn="p2" activeTurn={turn} bottom/>
+            <TokensHolder
+              tokens={p2}
+              turn="p2"
+              activeTurn={turn}
+              lalaJee={this.computerTurn}
+              bottom
+            />
           </div>
         }
 

@@ -8,6 +8,8 @@ const Button = (props) => (
     className={classnames(`btn ${props.className || ""}`, {
       success: props.success,
       failed:props.failed,
+      disable: props.disable,
+      link: props.link,
     })}
 
   >
