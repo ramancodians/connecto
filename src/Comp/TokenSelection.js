@@ -23,11 +23,13 @@ class TokenSelection extends React.Component {
   }
 
   componentWillUnmount(){
+    console.log("Saving to Store..");
     const { store } = window
     window.store = {
       ...store,
       ...this.state
     }
+    console.log("saved ==>", window.store);
   }
 
   render(){

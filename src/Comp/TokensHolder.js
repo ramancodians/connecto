@@ -28,10 +28,9 @@ class TokensHolder extends React.Component {
   }
 
   render(){
-    const { tokens, turn, activeTurn, top, bottom, lalaJee } = this.props
+    const { tokens, turn, activeTurn, top, bottom, lalaJee, image } = this.props
     const avalToken = new Array(tokens).fill(1)
     const { timeLeft } = this.state
-    console.log(this.state);
     return (
       <div
         className={classnames("token-holder", {
@@ -44,7 +43,16 @@ class TokensHolder extends React.Component {
         }}
       >
         {avalToken.map((token, index) => (
-          <div key={index} className={classnames("token", { pl1: turn === "p1", pl2: turn === "p2" })}>
+          <div
+            key={index}
+            style={{
+              backgroundImage: `url(${image})`,
+            }}
+            className={classnames("token",{
+              pl1: turn === "p1",
+              pl2: turn === "p2",
+            })}
+          >
           </div>
         ))}
         {timeLeft}

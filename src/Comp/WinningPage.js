@@ -7,8 +7,8 @@ const WinningPage = (props) => {
     <div className="winning-page">
       {console.log(props)}
       <h1>Player {isWon}  Won!</h1>
-      <Button success link="/">Play Again</Button>
-
+      <Button success link="/game">Play Again</Button>
+      <Button link="/">Back to Home Page</Button>
     </div>
   )
 }

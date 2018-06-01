@@ -23,12 +23,18 @@ class Board extends Component {
     SLIDE: new Audio("./media/slide_sound.mp3")
   }
 
-  componenWillMount() {
-    const { player1_image, player2_image } = window.store
-    this.setState({
-      player1_image,
-      player2_image,
-    })
+  componentDidMount() {
+    try {
+      console.log("Store ==>", window.store);
+      const { player1_image, player2_image } = window.store
+      this.setState({
+        player1_image,
+        player2_image,
+      })
+    }catch(e) {
+      const { history } = this.props
+      history.push("/")
+    }
   }
 
   handleTouch = (event) => {
@@ -144,7 +150,13 @@ class Board extends Component {
       <div>
         { !isWon &&
           <div className="board-wrap">
-            <TokensHolder tokens={p1} turn="p1" activeTurn={turn} top/>
+            <TokensHolder
+              tokens={p1}
+              turn="p1"
+              activeTurn={turn}
+              image={player1_image}
+              top
+            />
             <Table
               turn={turn}
               board={board}
@@ -162,6 +174,7 @@ class Board extends Component {
               tokens={p2}
               turn="p2"
               activeTurn={turn}
+              image={player2_image}
               lalaJee={this.computerTurn}
               bottom
             />
