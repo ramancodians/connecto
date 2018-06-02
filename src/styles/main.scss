@@ -44,20 +44,45 @@ body {
 }
 
 .board-table{
-  margin: 80px auto;
+  margin: 0px auto;
   display: block;
   max-width: 400px;
+  position: relative;
+  top: calc(50% - 150px);
+
+  &.isWon {
+    .token{
+      transition-duration: 0.5s;
+      animation: shake-the-board 1s infine ease;
+      opacity: 0.2;
+
+      &.isWon{
+        opacity: 1;
+      }
+    }
+  }
   .row{
     display: flex;
+
+    &:last-child{
+      .cell {
+        border-bottom: none;
+      }
+    }
 
     .cell{
       flex:1;
       text-align: center;
       display: flex;
       height: 100px;
-      border: 1px solid #CCC;
       justify-content: center;
       align-items: center;
+      border-right: $lineWidth solid $lineColor;
+      border-bottom: $lineWidth solid $lineColor;
+
+      &:nth-child(3){
+        border-right: none;
+      }
 
       &.isAvail{ background: green; }
       &.hovered { background: pink; }
@@ -96,10 +121,18 @@ body {
   }
 
   &.pl1 {
-    background-color: red;
+    background-color: $player1Color;
   }
   &.pl2 {
-    background-color: blue;
+    background-color: $player2Color;
+  }
+
+
+  &.isWon {
+    transform: scale(1.3);
+    position: relative;
+    z-index: 999;
+    animation: shake-the-board 1s ease infinite;
   }
 
   &.active{
@@ -127,6 +160,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition-duration: 0.3s;
 
   &.activeTurn{
     border: 2px solid green;
@@ -136,16 +170,33 @@ body {
     top: -2px;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+    .timer {
+      bottom: -45px;
+      background: $player1Color;
+    }
   }
   &.bottom{
     bottom: -2px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    .timer {
+      background: $player2Color;
+      top: -45px;
+    }
   }
   .token{
     margin: 10px;
     height: 30px;
     width: 30px;
+  }
+
+  &.empty {
+    &.top {
+      top: -45px;
+    }
+    &.bottom {
+      bottom: -45px;
+    }
   }
 }
 
@@ -157,6 +208,8 @@ body {
   font-weight: bold;
   font-size: 18px;
   transition-duration: 0.2s;
+  border: none;
+  background: transparent;
 
   a{
     text-decoration: none;
@@ -164,7 +217,6 @@ body {
   }
 
   &.link {
-    background: red;
     padding: 0px;
 
     a {
@@ -244,4 +296,61 @@ body {
 
 .p2color {
   color: $player2Color;
+}
+
+.timer {
+  position: absolute;
+  padding: 10px;
+  border-radius: 4px;
+  color: #FFF;
+  font-weight: bold;
+
+  img {
+    width: 16px;
+    height: auto;
+    padding: 0px;
+    margin: 0px;
+    display: inline-block;
+    margin-right: 10px;
+  }
+}
+
+
+.winning-page {
+  background: rgba(#75DDF8, 1);
+  // position: fixed;
+  // width: 100%;
+  // height: 100%;
+  // text-align: center;
+  // z-index: 1;
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // justify-content: center;
+
+  h1 {
+    margin: 20px auto;
+    color: #FFF;
+  }
+
+  .btn {
+    margin-bottom: 10px;
+  }
+}
+
+.shake-the-board {
+  animation: shake-the-board 800ms ease forwards;
+}
+
+@keyframes shake-the-board {
+  0% { transform: rotateZ(0deg);}
+  10% { transform: rotateZ(-4deg);}
+  20% { transform: rotateZ(4deg);}
+  30% { transform: rotateZ(-4deg);}
+  40% { transform: rotateZ(4deg);}
+  50% { transform: rotateZ(-4deg);}
+  60% { transform: rotateZ(4deg);}
+  70% { transform: rotateZ(-4deg);}
+  80% { transform: rotateZ(5deg);}
+  100% { transform: inherit}
 }

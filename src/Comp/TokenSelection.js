@@ -23,19 +23,16 @@ class TokenSelection extends React.Component {
   }
 
   componentWillUnmount(){
-    console.log("Saving to Store..");
     const { store } = window
     window.store = {
       ...store,
       ...this.state
     }
-    console.log("saved ==>", window.store);
   }
 
   render(){
     const { activeSelection, player1, player2 } = this.state
     const isSameToken = player1 && player2 && player1 === player2
-    console.log(this.state);
     return (
       <div className="token-selection">
         <h2 className={classnames({

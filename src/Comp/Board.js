@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import Table from "./Table"
 import TokensHolder from "./TokensHolder"
+import WinnngPage from "./WinningPage"
 import { getPossibleDropLocation, moveToken, isWon, placeAToken } from "./../helpers"
 import SlideSoundMP3 from "./../media/slide_sound.mp3"
 
@@ -25,7 +26,6 @@ class Board extends Component {
 
   componentDidMount() {
     try {
-      console.log("Store ==>", window.store);
       const { player1_image, player2_image } = window.store
       this.setState({
         player1_image,
@@ -61,11 +61,19 @@ class Board extends Component {
     })
   }
 
+  setWinner = (winner) => {
+    this.setState({
+      isWon: winner,
+    })
+  }
+
   componentDidUpdate() {
     const { isWon } = this.state
     const { history } = this.props
     if (isWon) {
-      history.push("/over", { isWon });
+      setTimeout(() => {
+        history.push("/over", { isWon });
+      }, 2000)
     }
   }
 
@@ -88,9 +96,14 @@ class Board extends Component {
     }
   }
 
+  shakeTheBoard = (val) => {
+    this.setState({
+      isShake: val,
+    })
+  }
+
   computerTurn = () => {
     let emptyPos  = []
-    console.log("CPU turn");
   }
 
   toggleTurn = () => {
@@ -144,17 +157,21 @@ class Board extends Component {
       p2,
       player1_image,
       player2_image,
+      isShake
     } = this.state
     const tokens = turn === "p1" ? p1 : p2
     return (
       <div>
-        { !isWon &&
           <div className="board-wrap">
             <TokensHolder
               tokens={p1}
               turn="p1"
               activeTurn={turn}
               image={player1_image}
+              setWinner={this.setWinner}
+              shakeTheBoard={this.shakeTheBoard}
+              isShake={isShake}
+              isWon={isWon}
               top
             />
             <Table
@@ -169,6 +186,8 @@ class Board extends Component {
               placeAToken={this.handlePlaceAToken}
               player1Image={player1_image}
               player2Image={player2_image}
+              isShake={isShake}
+              isWon={isWon}
             />
             <TokensHolder
               tokens={p2}
@@ -176,12 +195,13 @@ class Board extends Component {
               activeTurn={turn}
               image={player2_image}
               lalaJee={this.computerTurn}
+              setWinner={this.setWinner}
+              isShake={isShake}
+              shakeTheBoard={this.shakeTheBoard}
+              isWon={isWon}
               bottom
             />
           </div>
-        }
-
-        { isWon && <h1> Player {isWon} Won!! </h1>  }
       </div>
     )
   }

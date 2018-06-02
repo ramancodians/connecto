@@ -17,6 +17,7 @@ const Cell = (props) => {
     placeAToken,
     player1Image,
     player2Image,
+    isWon,
   } = props
   const isAvailable = availableMovesBoard && availableMovesBoard[yCoords][xCoords]
   return (
@@ -42,6 +43,7 @@ const Cell = (props) => {
           storeAvailablePos={storeAvailablePos}
           availablePos={availablePos}
           moveToken={moveToken}
+          isWon={isWon}
           image={ text === "p1" ? player1Image : player2Image }
         />
       }

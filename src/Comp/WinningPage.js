@@ -1,12 +1,13 @@
 import React from "react"
 import Button from "./../DComp/Button"
+import WinnerGif from "./../media/winner.gif"
 
 const WinningPage = (props) => {
-  const { isWon } = props.location.state
+  const { isWon } = props
   return (
     <div className="winning-page">
-      {console.log(props)}
-      <h1>Player {isWon}  Won!</h1>
+      <img src={WinnerGif} alt="Winner"/>
+      <h1>Player {isWon === "p1" ? "1" : "2"}  Won!</h1>
       <Button success link="/game">Play Again</Button>
       <Button link="/">Back to Home Page</Button>
     </div>

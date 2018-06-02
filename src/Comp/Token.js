@@ -38,7 +38,8 @@ class Token extends Component {
     if (turn === player) {
       event.persist()
       let coords;
-      try { coords = event.changedTouches[0] || {}
+      try {
+        coords = event.changedTouches[0] || {}
       } catch(e){ coords = event.target }
       if(!availablePos){
         const availablePosEle = Array.from(document.querySelectorAll(".isAvail"))
@@ -76,6 +77,7 @@ class Token extends Component {
       onClick,
       selectedByP1,
       selectedByP2,
+      isWon,
     } = this.props
     const { isDragActive, touchLocation: { clientX, clientY } } = this.state
     const styles = isDragActive ? { top: `${+clientY - 25}px`, left: `${+clientX - 25}px`} : {}
@@ -98,7 +100,8 @@ class Token extends Component {
           { pl1: player === "p1",
             pl2: player === "p2",
             active: !notMoveble && isDragActive,
-            turn: !notMoveble && turn === player,
+            turn: !notMoveble && !isWon && turn === player,
+            isWon: isWon && turn !== player,
             selectedByP1,
             selectedByP2,
           })}

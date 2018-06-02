@@ -36,21 +36,38 @@ body {
   overflow: hidden; }
 
 .board-table {
-  margin: 80px auto;
+  margin: 0px auto;
   display: block;
-  max-width: 400px; }
+  max-width: 400px;
+  position: relative;
+  top: calc(50% - 150px); }
+
+.board-table.isWon .token {
+  transition-duration: 0.5s;
+  animation: shake-the-board 1s infine ease;
+  opacity: 0.2; }
+
+.board-table.isWon .token.isWon {
+  opacity: 1; }
 
 .board-table .row {
   display: flex; }
+
+.board-table .row:last-child .cell {
+  border-bottom: none; }
 
 .board-table .row .cell {
   flex: 1;
   text-align: center;
   display: flex;
   height: 100px;
-  border: 1px solid #CCC;
   justify-content: center;
-  align-items: center; }
+  align-items: center;
+  border-right: 5px solid #2c3e50;
+  border-bottom: 5px solid #2c3e50; }
+
+.board-table .row .cell:nth-child(3) {
+  border-right: none; }
 
 .board-table .row .cell.isAvail {
   background: green; }
@@ -85,10 +102,16 @@ body {
   animation: lowJump 1s infinite; }
 
 .token.pl1 {
-  background-color: red; }
+  background-color: #e74c3c; }
 
 .token.pl2 {
-  background-color: blue; }
+  background-color: #2980b9; }
+
+.token.isWon {
+  transform: scale(1.3);
+  position: relative;
+  z-index: 999;
+  animation: shake-the-board 1s ease infinite; }
 
 .token.active {
   transform: scale(1.2);
@@ -111,7 +134,8 @@ body {
   text-align: center;
   display: flex;
   align-items: center;
-  justify-content: center; }
+  justify-content: center;
+  transition-duration: 0.3s; }
 
 .token-holder.activeTurn {
   border: 2px solid green;
@@ -122,15 +146,29 @@ body {
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px; }
 
+.token-holder.top .timer {
+  bottom: -45px;
+  background: #e74c3c; }
+
 .token-holder.bottom {
   bottom: -2px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px; }
 
+.token-holder.bottom .timer {
+  background: #2980b9;
+  top: -45px; }
+
 .token-holder .token {
   margin: 10px;
   height: 30px;
   width: 30px; }
+
+.token-holder.empty.top {
+  top: -45px; }
+
+.token-holder.empty.bottom {
+  bottom: -45px; }
 
 .btn {
   display: inline-block;
@@ -139,14 +177,15 @@ body {
   min-width: 150px;
   font-weight: bold;
   font-size: 18px;
-  transition-duration: 0.2s; }
+  transition-duration: 0.2s;
+  border: none;
+  background: transparent; }
 
 .btn a {
   text-decoration: none;
   color: #FFF; }
 
 .btn.link {
-  background: red;
   padding: 0px; }
 
 .btn.link a {
@@ -207,3 +246,53 @@ body {
 
 .p2color {
   color: #2980b9; }
+
+.timer {
+  position: absolute;
+  padding: 10px;
+  border-radius: 4px;
+  color: #FFF;
+  font-weight: bold; }
+
+.timer img {
+  width: 16px;
+  height: auto;
+  padding: 0px;
+  margin: 0px;
+  display: inline-block;
+  margin-right: 10px; }
+
+.winning-page {
+  background: #75ddf8; }
+
+.winning-page h1 {
+  margin: 20px auto;
+  color: #FFF; }
+
+.winning-page .btn {
+  margin-bottom: 10px; }
+
+.shake-the-board {
+  animation: shake-the-board 800ms ease forwards; }
+
+@keyframes shake-the-board {
+  0% {
+    transform: rotateZ(0deg); }
+  10% {
+    transform: rotateZ(-4deg); }
+  20% {
+    transform: rotateZ(4deg); }
+  30% {
+    transform: rotateZ(-4deg); }
+  40% {
+    transform: rotateZ(4deg); }
+  50% {
+    transform: rotateZ(-4deg); }
+  60% {
+    transform: rotateZ(4deg); }
+  70% {
+    transform: rotateZ(-4deg); }
+  80% {
+    transform: rotateZ(5deg); }
+  100% {
+    transform: inherit; } }
